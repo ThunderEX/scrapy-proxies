@@ -5,7 +5,7 @@ from scrapy.exceptions import NotConfigured
 from scrapy.downloadermiddlewares.httpproxy import HttpProxyMiddleware
 from scrapy.utils.httpobj import urlparse_cached
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 class RandomProxy(object):
 
@@ -42,7 +42,7 @@ class RandomProxy(object):
         except (IndexError, KeyError):
             raise ValueError('No available proxy, cannot proceed')
 
-        log.debug('Using proxy <%s>, %d %s proxies left' % (
+        logger.debug('Using proxy <%s>, %d %s proxies left' % (
             midware.proxies[scheme], len(self.pool[scheme]), scheme))
         midware.process_request(request, spider)
 
@@ -57,5 +57,5 @@ class RandomProxy(object):
                 if err_proxy == proxy:
                     self.pool[scheme].remove(midware)
 
-                    log.warning('Removing failed proxy <%s>, %d %s proxies left' % (
+                    logger.warning('Removing failed proxy <%s>, %d %s proxies left' % (
                         proxy, len(self.pool[scheme]), scheme))

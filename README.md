@@ -4,7 +4,7 @@ Random proxy middleware for Scrapy (http://scrapy.org/)
 Processes Scrapy requests using a random proxy from list to avoid IP ban and
 improve crawling speed.
 
-Get your proxy list from sites like http://www.hidemyass.com/ (copy-paste into text file
+Get your proxy list from sites like http://proxylist.hidemyass.com/ (copy-paste into text file
 and reformat to http://host:port format)
 
 Install
@@ -12,7 +12,7 @@ Install
 
 The quick way:
 
-    pip install scrapy_proxies
+    pip install git+https://github.com/ThunderEX/scrapy-proxies.git@master
 
 Or checkout the source and run
 
@@ -26,11 +26,9 @@ settings.py
     RETRY_TIMES = 10
     # Retry on most error codes since proxies fail for different reasons
     RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
-
+    # Priority better > 500 to override built-in HttpProxyMiddleware
     DOWNLOADER_MIDDLEWARES = {
-        'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-        'scrapy_proxies.RandomProxy': 100,
-        'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+        'scrapy_proxies.RandomProxy': 543,
     }
 
     # Proxy list containing entries like
